@@ -12,6 +12,14 @@ public class User {
         return userName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
     public User[] getAll() {
         // Заполнить и вернуть всех пользователей (3-4)
         return null;
