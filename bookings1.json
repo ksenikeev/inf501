@@ -1,0 +1,34 @@
+{
+  "bookings": [
+    {
+      "id": 7087959,
+      "arrivaldate": "2022-03-10",
+      "stayingdate": "2022-03-11",
+      "departuredate": "2022-03-11",
+      "hotel": {
+        "id": 332,
+        "name": "hotel332"
+      },
+      "person": {
+        "gender": "Male",
+        "birthdate": "1983-10-14",
+        "fromcity": "Город Санкт-Петербург"
+      }
+    },
+    {
+      "id": 7087958,
+      "arrivaldate": "2022-03-10",
+      "stayingdate": "2022-03-11",
+      "departuredate": "2022-03-11",
+      "hotel": {
+        "id": 332,
+        "name": "hotel332"
+      },
+      "person": {
+        "gender": "Female",
+        "birthdate": "1987-11-02",
+        "fromcity": "Город Санкт-Петербург"
+      }
+    }
+    ]
+}
