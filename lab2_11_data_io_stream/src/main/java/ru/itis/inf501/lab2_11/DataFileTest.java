@@ -34,7 +34,7 @@ public class DataFileTest {
     }
 
     public void saveToFile(Person p) throws IOException {
-        try (DataOutputStream os = new DataOutputStream(new FileOutputStream(FILE_NAME))) {
+        try (DataOutputStream os = new DataOutputStream(new FileOutputStream(FILE_NAME, true))) {
             //пишем в файл длину имени lenName(1)
             os.writeByte(p.getName().length());
             // пишем name в UTF-8

@@ -8,7 +8,7 @@ public class MainSerialize {
         Car car = new Car("KIA RIO", "седан", "12312313");
         // 2. Сериализуем объект
 
-        try (FileOutputStream fos = new FileOutputStream("car.obj");
+        try (FileOutputStream fos = new FileOutputStream("car.obj", true);
                 ObjectOutputStream os = new ObjectOutputStream(fos)) {
 
             os.writeObject(car);

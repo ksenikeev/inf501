@@ -23,6 +23,7 @@ public class MainSerializeBuffer {
 
         try (ObjectInputStream is = new ObjectInputStream(
                 new ByteArrayInputStream(buffer))) {
+
             Car car1 = (Car) is.readObject();
             System.out.println(car1);
         } catch (FileNotFoundException e) {
