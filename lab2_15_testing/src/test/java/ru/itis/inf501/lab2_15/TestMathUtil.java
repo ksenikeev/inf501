@@ -1,11 +1,18 @@
 package ru.itis.inf501.lab2_15;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class TestMathUtil {
+
+    @BeforeAll
+    static void init() {
+
+    }
+
     @Test // Аннотация инициирует автоматическую проверку
     public void testSum() {
         // Проверяем результат
