@@ -23,6 +23,7 @@ public class TestMathUtil {
     }
 
     @ParameterizedTest
+    // @CsvFileSource(files = "test_data.csv")
     @CsvSource({
             "5,    5,   10", // 1-й набор аргументов
             "1,    2,   3", // 2-й набор аргументов
