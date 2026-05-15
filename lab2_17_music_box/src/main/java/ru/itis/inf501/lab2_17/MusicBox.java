@@ -34,15 +34,15 @@ public class MusicBox {
 
     }
 
-    public Trak findByNumber() {
+    public MusikTrack findByNumber() {
         return null;
     }
 
-    public List<Trak> findByName(String name) {
+    public List<MusikTrack> findByName(String name) {
         return null;
     }
 
-    public List<Trak> findByAuthor(String author) {
+    public List<MusikTrack> findByAuthor(String author) {
         return null;
     }
 
@@ -54,7 +54,7 @@ public class MusicBox {
 
     }
 
-    public Trak addTrak(String name, String author, String file) {
+    public MusikTrack addTrak(String name, String author, String file) {
         return null;
     }
 }
