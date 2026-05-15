@@ -1,6 +1,12 @@
 package ru.itis.inf501.lab2_17;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -9,7 +15,7 @@ public class MusicBox {
 
     private String catalogFileName = "catalog.json";
     private Clip currentClip;
-    private Integer currentTrak;
+    private Integer currentTrack;
     private MusicCatalog catalog;
 
     public MusicBox() {
@@ -105,12 +111,29 @@ public class MusicBox {
             }
         }
     }
-    public Clip play(int trakNumber) {
-        // TODO Файзуллина
-        // запустить воспроизведение в отдельном потоке
-        return null;
-    }
 
+    public Clip play(int trackNumber) {
+        // запустить воспроизведение в отдельном потоке
+        try (AudioInputStream audioStream =
+                     AudioSystem.getAudioInputStream(new File(findByNumber(trackNumber).getFile()))){
+            if (currentClip != null) {
+                if (currentClip.isRunning()) {
+                    currentClip.stop();
+                }
+                currentClip.close();
+            }
+
+            currentTrack = trackNumber;
+
+            currentClip = AudioSystem.getClip();
+            currentClip.open(audioStream);
+            currentClip.start();
+            return currentClip;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public MusicCatalog loadCatalog() {
         // TODO Мухамедзянова
         return null;
@@ -121,7 +144,14 @@ public class MusicBox {
     }
 
     public void showAllTracks() {
-        // TODO Киямутдинов
+        System.out.println("Список всех треков:");
+        if (catalog.getMusicTrack() != null) {
+            catalog.getMusicTrack().stream()
+                    .filter(track -> track != null)
+                    .forEach(track -> System.out.println(track.getName() + " (исполняет: " + track.getAuthor() + ")"));
+        } else {
+            System.out.println("Пустой каталог");
+        }
     }
 
     public List<MusicTrack> findByName(String name) {
@@ -156,12 +186,37 @@ public class MusicBox {
 
     }
 
-    public void delete(int trackNumber) {
-        // TODO Агафонов
+    public void delete(int trakNumber) {
+        List<MusicTrack> traks = this.catalog.getMusicTrack();
+        if (traks == null || traks.isEmpty()) {
+            System.out.println("Каталог пуст.");
+            showMenu();
+            return;
+        }
+        int index = trakNumber - 1;
+        if (index < 0 || index >
+                = traks.size()) {
+            System.out.println("Трека с таким номером нет.");
+            showMenu();
+            return;
+        }
+        MusicTrack deletedTrack = traks.remove(index);
+        saveCatalog();
+        System.out.println("Трек удалён: " +
+                deletedTrack.getName() +
+                " - " + deletedTrack.getAuthor());
+        showMenu();
     }
 
-    public MusicTrack addTrack(String name, String author, String file) {
-        // TODO Бессонов
-        return null;
+    public MusicTrack addTrack(String name, String author, String file) throws FileNotExistException {
+        Path path = Paths.get(file);
+        if (!Files.exists(path)) {
+            throw new FileNotExistException();
+        }
+
+        MusicTrack toAdd = new MusicTrack(name, author, file);
+
+        this.catalog.getMusicTrack().add(toAdd);
+        return toAdd;
     }
 }
