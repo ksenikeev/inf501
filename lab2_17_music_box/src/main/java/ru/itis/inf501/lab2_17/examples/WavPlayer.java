@@ -6,6 +6,13 @@ import javax.sound.sampled.Clip;
 import java.io.File;
 
 public class WavPlayer {
+
+    private Clip clip;
+    public Clip getClip() {
+        return clip;
+    }
+
+
     public static void main(String[] args) {
         try {
             AudioInputStream audioStream =
