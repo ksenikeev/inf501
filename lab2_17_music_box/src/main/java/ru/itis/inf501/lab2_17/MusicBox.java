@@ -2,30 +2,116 @@ package ru.itis.inf501.lab2_17;
 
 import javax.sound.sampled.Clip;
 import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class MusicBox {
 
     private String catalogFileName = "catalog.json";
     private Clip currentClip;
     private Integer currentTrak;
+    private MusicCatalog catalog;
+
+    public MusicBox() {
+        this.catalog = loadCatalog();
+        if (catalog == null) {
+            catalog = new MusicCatalog();
+        }
+    }
 
     public void showMenu() {
-        // TODO Крайнова
+        System.out.println("\nМЕНЮ");
+        System.out.println("1. Загрузка каталога");
+        System.out.println("2. Ввод нового трека");
+        System.out.println("3. Удаление трека");
+        System.out.println("4. Просмотр всех треков");
+        System.out.println("5. Поиск трека по номеру");
+        System.out.println("6. Поиск трека по названию");
+        System.out.println("7. Поиск трека по автору/исполнителю");
+        System.out.println("8. Проигрывание трека");
+        System.out.println("9. Остановка трека");
+        System.out.println("0. Выход");
+        System.out.print("Выберите действие: ");
+        userChoiceHandler();
     }
 
     public void userChoiceHandler() {
-        // TODO Осадчая
-        // ввод числа - пункта меню
-        // вызов соответствующего метода
-    }
 
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            int number = scanner.nextInt();
+            switch (number) {
+                case 1:
+                    loadCatalog();
+                    break;
+                case 2:
+                    System.out.println("Введите название трека, автора трека и путь к файлу через enter");
+                    Scanner scanner1 = new Scanner(System.in);
+                    String name = scanner1.nextLine();
+                    Scanner scanner2 = new Scanner(System.in);
+                    String author = scanner2.nextLine();
+                    Scanner scanner3 = new Scanner(System.in);
+                    String file = scanner3.nextLine();
+                    addTrack(name, author, file);
+                    break;
+
+                case 3:
+                    System.out.println("Введите номер трека");
+                    Scanner scanner4 = new Scanner(System.in);
+                    int num1 = scanner4.nextInt();
+                    delete(num1);
+                    break;
+
+                case 4:
+                    showAllTracks();
+                    break;
+
+                case 5:
+                    System.out.println("Введите номер трека");
+                    Scanner scanner5 = new Scanner(System.in);
+                    int num2 = scanner5.nextInt();
+                    findByNumber(num2);
+                    break;
+
+                case 6:
+                    System.out.println("Введите название трека");
+                    Scanner scanner6 = new Scanner(System.in);
+                    String name1 = scanner6.nextLine();
+                    findByName(name1);
+                    break;
+
+                case 7:
+                    System.out.println("Введите автора трека");
+                    Scanner scanner7 = new Scanner(System.in);
+                    String author1 = scanner7.nextLine();
+                    findByName(author1);
+                    break;
+
+                case 8:
+                    System.out.println("Введите номер трека");
+                    Scanner scanner8 = new Scanner(System.in);
+                    int num3 = scanner8.nextInt();
+                    play(num3);
+                    break;
+
+                case 9:
+                    stopClip();
+                    break;
+
+                case 0:
+                    System.out.println("Программа завершена");
+                    return;
+
+            }
+        }
+    }
     public Clip play(int trakNumber) {
         // TODO Файзуллина
         // запустить воспроизведение в отдельном потоке
         return null;
     }
 
-    public Catalog loadCatalog() {
+    public MusicCatalog loadCatalog() {
         // TODO Мухамедзянова
         return null;
     }
@@ -34,21 +120,34 @@ public class MusicBox {
         // TODO Талбиева
     }
 
-    public void showAllTraks() {
+    public void showAllTracks() {
         // TODO Киямутдинов
     }
 
-    public MusikTrack findByNumber(int number) {
-        // TODO Шамсутдинова
-        return null;
+    public List<MusicTrack> findByName(String name) {
+        MusicCatalog catalog = loadCatalog();
+        return catalog.getMusicTrack().stream()
+                .filter(track ->
+                        track.getName()
+                                .toLowerCase()
+                                .contains(name.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
-    public List<MusikTrack> findByName(String name) {
-        // TODO Фомин
-        return null;
+    public MusicTrack findByNumber(int trackNumber) {
+        //TODO
+        if (catalog == null || catalog.getMusicTrack() == null) {
+            return null;
+        }
+        int index = trackNumber - 1;
+        if (index < 0 || index >= catalog.getMusicTrack().size()) {
+            System.out.println("Трека с таким номером не существует");
+            return null;
+        }
+        return catalog.getMusicTrack().get(index);
     }
 
-    public List<MusikTrack> findByAuthor(String author) {
+    public List<MusicTrack> findByAuthor(String author) {
         // TODO Круглов
         return null;
     }
@@ -57,11 +156,11 @@ public class MusicBox {
 
     }
 
-    public void delete(int trakNumber) {
+    public void delete(int trackNumber) {
         // TODO Агафонов
     }
 
-    public MusikTrack addTrak(String name, String author, String file) {
+    public MusicTrack addTrack(String name, String author, String file) {
         // TODO Бессонов
         return null;
     }
